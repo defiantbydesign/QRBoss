@@ -1,20 +1,20 @@
 .qrForm {
   margin: 20px auto;
   max-width: 1000px;
+  min-width: 800px;
   height: 75vh;
-  background: #ececec;
-  color: #081829;
+  background: #e5e1ee;
+  color: #00120B;
   border-radius: 8px;
-  border: 2px solid #ececec;
+  border: 4px solid #00120B;
 }
 .qrForm .formOpts {
   display: flex;
   gap: 0.25rem;
   margin-bottom: 10px;
-  background: #081829;
-  color: #ececec;
-  border-bottom: 0.25rem solid #081829;
-  border-radius: 8px 8px 0 0;
+  background: #00120B;
+  color: #e5e1ee;
+  border-bottom: 0.25rem solid #00120B;
 }
 .qrForm .formOpts .optLabel {
   padding: 0.5rem 1rem;
@@ -28,11 +28,12 @@
   display: block;
   height: 3px;
   width: 0px;
-  background: orange;
+  background: #f6ae2d;
   transition: width 0.3s ease, left 0.3s ease;
   position: absolute;
   bottom: 0;
   left: 50%;
+  margin-bottom: -3px;
 }
 .qrForm .formOpts .optLabel.active:after {
   width: 100%;
@@ -43,21 +44,14 @@
 }
 .qrForm .formFields {
   display: flex;
+  padding: 0.5rem;
   width: 60%;
   height: 100%;
   flex-direction: column;
 }
 .qrForm .formFields button {
-  width: 15rem;
-  margin-top: 20px;
-  padding: 0.75rem;
-  font-size: 1.124rem;
-  background: #081829;
-  color: #ececec;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: bold;
+  background: #00120B;
+  color: #e5e1ee;
 }
 .qrForm .formContainer {
   display: flex;
@@ -69,14 +63,16 @@
   align-items: center;
 }
 .qrForm .formContainer .qrResult button {
-  margin-top: 20px;
-  padding: 0.75rem;
-  background: #081829;
-  color: #ececec;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: bold;
+  background: #f6ae2d;
+  color: #00120B;
+}
+
+.headerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
 }
 
 html body {
@@ -85,8 +81,8 @@ html body {
 }
 
 body {
-  color: #ececec;
-  background: #081829;
+  color: #e5e1ee;
+  background: #6E7E85;
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -101,6 +97,18 @@ body {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+button {
+  padding: 0.75rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  width: fit-content;
+  min-width: 215px;
 }
 
 /*# sourceMappingURL=styles.css.map */

@@ -1,19 +1,20 @@
 .qrForm
     margin: 20px auto
     max-width: 1000px
+    min-width: 800px
     height: 75vh
     background: $white
     color: $black
     border-radius: 8px
-    border: 2px solid $white
+    border: 4px solid $black
+    
     .formOpts
         display: flex
         gap: .25rem
         margin-bottom: 10px
         background: $black
         color: $white
-        border-bottom: .25rem solid $black   
-        border-radius: 8px 8px 0 0
+        border-bottom: .25rem solid $black
         .optLabel
             padding: .5rem 1rem
             font-size: 1.124rem
@@ -25,11 +26,12 @@
                 display: block
                 height: 3px
                 width: 0px
-                background: orange
+                background: $gold
                 transition: width 0.3s ease, left 0.3s ease
                 position: absolute
                 bottom: 0
                 left: 50%
+                margin-bottom: -3px
             &.active:after
                 width: 100%
                 left: 0
@@ -39,21 +41,14 @@
 
     .formFields
         display: flex
+        padding: .5rem
         width: 60%
         height: 100%
         flex-direction: column
 
         button
-            width: 15rem
-            margin-top: 20px
-            padding: .75rem
-            font-size: 1.124rem
             background: $black
             color: $white
-            border: none
-            border-radius: 4px
-            cursor: pointer
-            font-weight: bold
 
     .formContainer
         display: flex
@@ -65,11 +60,5 @@
             align-items: center
 
             button
-                margin-top: 20px
-                padding: .75rem
-                background: $black
-                color: $white
-                border: none
-                border-radius: 4px
-                cursor: pointer
-                font-weight: bold
+                background: $gold
+                color: $black
