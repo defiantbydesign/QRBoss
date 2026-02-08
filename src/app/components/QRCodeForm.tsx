@@ -4,7 +4,8 @@ import { generateQRCode } from "../actions/generateQRCode";
 
 export default function QRCodeForm(){
     const [selectedOption, setSelectedOption] = useState('optionURL')
-    const [downloadFormat, setDownloadFormat] = useState('png')
+    const [downloadFormat, setDownloadFormat] = useState('svg')
+    // active styling driven by `selectedOption` so default selection shows active
     const [decodedData, setDecodedData] = useState('')
     const setAndLogDecoded = (v: string) => {
         console.log('Decoded data (final):', v)
@@ -28,6 +29,7 @@ export default function QRCodeForm(){
     const [vcountry, setVcountry] = useState('')
     
     const handleOptionChange = (event: any) => {
+
         setSelectedOption(event.target.value)
     }
 
@@ -266,21 +268,10 @@ export default function QRCodeForm(){
         }
     },[decodedData])
 
-    // Log generated QR codes when they appear in action state
-    useEffect(()=>{
-        if (state?.qrCode) console.log('Generated QR code (data URL):', state.qrCode);
-        if (state?.qrCodeSvg) console.log('Generated QR code (SVG):', state.qrCodeSvg);
-    },[state?.qrCode, state?.qrCodeSvg])
-
-    // Log when action finishes
-    useEffect(()=>{
-        if (!isGenerating) console.log('QR action completed. Current state:', state);
-    },[isGenerating])
-
     return(
         <>
-            <form action={action}>
-                <div>
+            <form action={action} className="qrForm">
+                <div className="formOpts">
                     <input
                         type="radio"
                         name="type"
@@ -288,8 +279,9 @@ export default function QRCodeForm(){
                         value="optionURL"
                         checked={selectedOption === 'optionURL'}
                         onChange={handleOptionChange}
+                        className="radioOpt"
                         />                
-                        <label htmlFor="url">Website</label>
+                        <label htmlFor="url" className={`optLabel ${selectedOption === 'optionURL' ? 'active' : ''}`}>Website</label>
                     <input
                         type="radio"
                         name="type"
@@ -297,19 +289,22 @@ export default function QRCodeForm(){
                         value="optionVCard"
                         checked={selectedOption === 'optionVCard'}
                         onChange={handleOptionChange}
+                        className="radioOpt"
                     />
-                    <label htmlFor="vcard">vCard</label>
+                    <label htmlFor="vcard" className={`optLabel ${selectedOption === 'optionVCard' ? 'active' : ''}`}>vCard</label>
                     <input
                         type="radio"
                         name="type"
-                        id="submit"
-                        value="optionSubmit"
-                        checked={selectedOption === 'optionSubmit'}
+                        id="upload"
+                        value="optionUpload"
+                        checked={selectedOption === 'optionUpload'}
                         onChange={handleOptionChange}
+                        className="radioOpt"
                     />
-                    <label htmlFor="submit">Submit</label>
+                    <label htmlFor="upload" className={`optLabel ${selectedOption === 'optionUpload' ? 'active' : ''}`}>Upload</label>
                 </div>
-
+                <div className="formContainer">
+<div className="formFields">
                 {selectedOption === 'optionURL' && (
                     <>
                         <label htmlFor="urlInput">Enter URL:</label>
@@ -321,7 +316,7 @@ export default function QRCodeForm(){
                             value={urlInput}
                             onChange={(e)=>setUrlInput(e.target.value)}
                             />
-                        <button type="submit" disabled={isGenerating}>Generate QR Code</button>
+                        <button type="submit" disabled={isGenerating}>Create QR Code</button>
                     </>
                 )}
                 {selectedOption === 'optionVCard' && (
@@ -371,10 +366,10 @@ export default function QRCodeForm(){
                         {/* hidden field with full vCard payload for server action */}
                         <input type="hidden" name="vcard" value={generateVCardString({first:vfirst,last:vlast,org:vorg,email:vemail,workphone:vworkphone,mobilephone:vmobilephone,fax:vfax,title:vtitle,url:vurl,street:vstreet,city:vcity,state:vstate,zip:vzip,country:vcountry})} />
 
-                        <button type="submit" disabled={isGenerating}>Generate vCard QR</button>
+                        <button type="submit" disabled={isGenerating}>Create vCard QR Code</button>
                     </>
                 )}
-                {selectedOption === 'optionSubmit' && (
+                {selectedOption === 'optionUpload' && (
                     <>
                         <label htmlFor="uploadQR">Upload QR image:</label>
                         <input
@@ -385,16 +380,16 @@ export default function QRCodeForm(){
                             onChange={handleFileUploadChange}
                             />
 
-                        <button type="submit" disabled={isGenerating}>Submit QR Code</button>
+                        <button type="submit" disabled={isGenerating}>Upload QR Code</button>
                     </>
                 )}
-                
+                </div>
 
-            </form>
+
 
             {state.qrCode && (
-                <div style={{ marginTop: '20px' }}>
-                    <h3>Generated QR Code:</h3>
+                <div className="qrResult">
+                    <h3>Created QR Code:</h3>
                     <img src={state.qrCode} alt="QR Code" style={{ border: '1px solid #ccc' }} />
                     
                     <div style={{ marginTop: '15px' }}>
@@ -403,8 +398,8 @@ export default function QRCodeForm(){
                             value={downloadFormat} 
                             onChange={(e) => setDownloadFormat(e.target.value)}
                             style={{ marginLeft: '10px' }}>
-                            <option value="png">PNG</option>
                             <option value="svg">SVG</option>
+                            <option value="png">PNG</option>
                         </select>
                         <button 
                             onClick={handleDownload}
@@ -414,6 +409,8 @@ export default function QRCodeForm(){
                     </div>
                 </div>
             )}
+            </div>
+                        </form>
         </>
     )
 }
